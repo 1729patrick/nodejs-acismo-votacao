@@ -6,6 +6,7 @@ class Vote extends Model {
       {
         finalist_id: Sequelize.INTEGER,
         company_id: Sequelize.INTEGER,
+        category: Sequelize.STRING,
       },
       { sequelize }
     );

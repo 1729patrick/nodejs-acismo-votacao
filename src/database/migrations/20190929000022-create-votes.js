@@ -28,7 +28,9 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
         allowNull: false,
-        unique: true,
+      },
+      category: {
+        type: Sequelize.STRING,
       },
     });
   },
