@@ -1,32 +1,26 @@
 'use strict';
+
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('companies', {
+    return queryInterface.createTable('categories', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      social_name: {
+      name: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      fantasy_name: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      cnpj: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      password: {
+      size: {
         type: Sequelize.STRING,
         allowNull: false,
       },
     });
   },
-  down: queryInterface => {
-    return queryInterface.dropTable('companies');
+
+  down: (queryInterface, Sequelize) => {
+    return queryInterface.dropTable('categories');
   },
 };

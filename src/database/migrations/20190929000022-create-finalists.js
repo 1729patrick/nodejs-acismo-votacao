@@ -2,39 +2,36 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('votes', {
+    return queryInterface.createTable('finalists', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      finalist_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'finalists',
-          key: 'id',
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
+      ownerName: {
+        type: Sequelize.STRING,
         allowNull: false,
       },
       company_id: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
           model: 'companies',
           key: 'id',
         },
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
-        allowNull: false,
       },
-      category: {
-        type: Sequelize.STRING,
+      category_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'categories',
+          key: 'id',
+        },
       },
     });
   },
   down: queryInterface => {
-    return queryInterface.dropTable('votes');
+    return queryInterface.dropTable('finalists');
   },
 };
