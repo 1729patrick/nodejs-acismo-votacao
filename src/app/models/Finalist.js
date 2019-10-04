@@ -5,7 +5,7 @@ class Finalist extends Model {
     super.init(
       {
         company_id: Sequelize.INTEGER,
-        category: Sequelize.STRING,
+        category_id: Sequelize.INTEGER,
       },
       { sequelize }
     );
@@ -15,6 +15,10 @@ class Finalist extends Model {
 
   static associate(models) {
     this.belongsTo(models.Company, { foreignKey: 'company_id', as: 'company' });
+    this.belongsTo(models.Category, {
+      foreignKey: 'category_id',
+      as: 'category',
+    });
   }
 }
 

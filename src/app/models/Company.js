@@ -7,7 +7,7 @@ class Company extends Model {
         social_name: Sequelize.STRING,
         fantasy_name: Sequelize.STRING,
         cnpj: Sequelize.STRING,
-        active: Sequelize.BOOLEAN,
+        password: Sequelize.STRING,
       },
       { sequelize }
     );

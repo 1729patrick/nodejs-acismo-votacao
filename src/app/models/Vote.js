@@ -6,7 +6,7 @@ class Vote extends Model {
       {
         finalist_id: Sequelize.INTEGER,
         company_id: Sequelize.INTEGER,
-        category: Sequelize.STRING,
+        category_id: Sequelize.INTEGER,
       },
       { sequelize }
     );
@@ -22,6 +22,10 @@ class Vote extends Model {
     this.belongsTo(models.Company, {
       foreignKey: 'company_id',
       as: 'company',
+    });
+    this.belongsTo(models.Category, {
+      foreignKey: 'category_id',
+      as: 'category',
     });
   }
 }
