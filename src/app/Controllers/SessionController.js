@@ -3,17 +3,33 @@ import jwt from 'jsonwebtoken';
 
 class SessionController {
   async store(req, res) {
-    const { cnpj } = req.body;
+    let { cnpj, password } = req.body;
 
-    const company = await Company.findOne({ cnpj });
+    let company = await Company.findOne({
+      where: { cnpj },
+    });
 
     if (!company) {
-      return res.status(404).json({ error: 'Company not found' });
+      return res.status(404).json({
+        error: 'CNPJ não encontrado, altere o CNPJ e tente novamente',
+      });
+    }
+
+    if (company.password !== password) {
+      return res.status(404).json({
+        error:
+          'Senha incorreta, parece que a senha que você digitou esta errada',
+      });
     }
 
     const token = jwt.sign({ companyId: company.id }, 'ASDSAFDSADSA');
 
-    return res.json({ company, token });
+    const { id, social_name, fantasy_name } = company;
+
+    return res.json({
+      company: { id, social_name, fantasy_name, cnpj },
+      token,
+    });
   }
 }
 
