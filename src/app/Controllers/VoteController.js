@@ -1,7 +1,7 @@
 import Vote from '../models/Vote';
 import Finalist from '../models/Finalist';
 
-import database from '../../database';
+import companies from '../models/Company';
 
 class VoteController {
   async store(req, res) {
@@ -68,7 +68,17 @@ class VoteController {
   }
 
   async test(req, res) {
-    return res.json({ ok: true });
+    const comp = await companies.findAll();
+
+    comp.forEach(c => {
+      let r = Math.random()
+        .toString(36)
+        .substring(7);
+      c.update({ password: r.toUpperCase() });
+      c.save();
+    });
+
+    return res.json({ comp });
   }
 }
 

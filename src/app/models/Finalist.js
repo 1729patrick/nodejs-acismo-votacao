@@ -6,6 +6,7 @@ class Finalist extends Model {
       {
         company_id: Sequelize.INTEGER,
         category_id: Sequelize.INTEGER,
+        owner_name: Sequelize.STRING,
       },
       { sequelize }
     );
