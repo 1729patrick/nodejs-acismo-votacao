@@ -4,7 +4,7 @@ import Category from '../models/Category';
 
 class FinalistController {
   async index(_, res) {
-    const finalists = await Finalist.findAll({
+    let finalists = await Finalist.findAll({
       include: [
         {
           model: Company,
@@ -17,7 +17,7 @@ class FinalistController {
           attributes: { exclude: ['id'] },
         },
       ],
-      attributes: ['id'],
+      attributes: ['id', 'owner_name'],
     });
 
     return res.json({ finalists });

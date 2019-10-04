@@ -45,7 +45,8 @@ class PodiumController {
       return {
         total: Number(vote.total),
         category,
-        company: { ...company, owner_name },
+        owner_name,
+        company,
       };
     });
 
