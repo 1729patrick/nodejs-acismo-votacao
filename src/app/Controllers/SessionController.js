@@ -1,6 +1,5 @@
 import Company from '../models/Company';
 import jwt from 'jsonwebtoken';
-
 class SessionController {
   async store(req, res) {
     let { cnpj, password } = req.body;
@@ -22,7 +21,7 @@ class SessionController {
       });
     }
 
-    const token = jwt.sign({ companyId: company.id }, 'ASDSAFDSADSA');
+    const token = jwt.sign({ companyId: company.id }, process.env.APP_SECRET);
 
     const { id, social_name, fantasy_name } = company;
 
