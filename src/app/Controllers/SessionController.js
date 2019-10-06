@@ -15,7 +15,7 @@ class SessionController {
     }
 
     if (company.password !== password) {
-      return res.status(404).json({
+      return res.status(401).json({
         error:
           'Senha incorreta, parece que a senha que você digitou esta errada',
       });

@@ -1,10 +1,10 @@
 import { Router } from 'express';
 
 import authMiddleware from './app/middlewares/auth';
-import SessionController from './app/Controllers/SessionController';
-import FinalistController from './app/Controllers/FinalistController';
-import VoteController from './app/Controllers/VoteController';
-import PodiumController from './app/Controllers/PodiumController';
+import SessionController from './app/controllers/SessionController';
+import FinalistController from './app/controllers/FinalistController';
+import VoteController from './app/controllers/VoteController';
+import PodiumController from './app/controllers/PodiumController';
 
 const router = new Router();
 

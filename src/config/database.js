@@ -1,12 +1,16 @@
+require('../bootstrap');
+
 module.exports = {
-  username: 'postgres',
-  password: 'root',
-  database: 'votacao',
-  host: 'localhost',
-  dialect: 'postgres',
+  dialect: process.env.DB_DIALECT || 'postgres',
+  host: process.env.DB_HOST,
+  username: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME,
+  storage: './__tests__/database.sqlite',
+  logging: false,
   define: {
     timestamps: false,
     underscored: true,
-    undescoredAll: true,
+    underscoredAll: true,
   },
 };
