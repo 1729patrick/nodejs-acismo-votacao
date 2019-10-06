@@ -1,17 +1,15 @@
 import request from 'supertest';
 
 import app from '../../src/app';
+
 import truncate from '../util/truncate';
+import factory from '../factories';
 
-import Company from '../../src/app/models/Company';
-
-describe('session', () => {
-  beforeEach(async () => {
+describe('Company', () => {
+  beforeAll(async () => {
     await truncate();
 
-    await Company.create({
-      social_name: 'COMPANY',
-      fantasy_name: 'COMPANY INC.',
+    await factory.create('Company', {
       cnpj: 'CNPJ',
       password: 'PASSWORD',
     });
@@ -22,7 +20,7 @@ describe('session', () => {
       .post('/sessions')
       .send({
         cnpj: '04.687.857/-82',
-        password: '04.687.857/-82',
+        password: 'PASSWORD',
       });
 
     expect(response.status).toBe(404);

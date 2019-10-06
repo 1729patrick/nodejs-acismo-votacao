@@ -20,31 +20,31 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">33.33% </span>
+        <span class="strong">86.67% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>5/15</span>
+        <span class='fraction'>13/15</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">50% </span>
+        <span class="strong">66.67% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>3/6</span>
+        <span class='fraction'>4/6</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">50% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>1/2</span>
+        <span class='fraction'>2/2</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">16.67% </span>
+        <span class="strong">83.33% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>2/12</span>
+        <span class='fraction'>10/12</span>
       </div>
     </div>
     <p class="quiet">
       Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
     </p>
   </div>
-  <div class='status-line low'></div>
+  <div class='status-line high'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -68,46 +68,46 @@
 <a name='L20'></a><a href='#L20'>20</a>
 <a name='L21'></a><a href='#L21'>21</a>
 <a name='L22'></a><a href='#L22'>22</a>
-<a name='L23'></a><a href='#L23'>23</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L23'></a><a href='#L23'>23</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import jwt from 'jsonwebtoken';<span class="branch-0 cbranch-no" title="branch not covered" ></span>
 &nbsp;
-export default asyn<span class="fstat-no" title="function not covered" >c </span>(req, res, next) =&gt; {
-  const { authorization } = <span class="cstat-no" title="statement not covered" >req.headers;</span>
+export default async (req, res, next) =&gt; {
+  const { authorization } = req.headers;
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  if (!authorization) {</span>
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (!authorization) {
 <span class="cstat-no" title="statement not covered" >    return res.status(401).json({ error: 'Token not provided' });</span>
   }
-  const [, token] = <span class="cstat-no" title="statement not covered" >authorization.split(' ');</span>
+  const [, token] = authorization.split(' ');
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  try {</span>
-    const tokenDecoded = <span class="cstat-no" title="statement not covered" >await jwt.decode(token);</span>
+  try {
+    const tokenDecoded = await jwt.decode(token);
 &nbsp;
-    const { companyId } = <span class="cstat-no" title="statement not covered" >tokenDecoded;</span>
+    const { companyId } = tokenDecoded;
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    req.companyId = companyId;</span>
+    req.companyId = companyId;
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return next();</span>
+    return next();
   } catch (e) {
 <span class="cstat-no" title="statement not covered" >    return res.status(401).json({ error: 'Invalid token' });</span>
   }
@@ -118,7 +118,7 @@ export default asyn<span class="fstat-no" title="function not covered" >c </span
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Oct 06 2019 18:09:43 GMT+0100 (Western European Summer Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Oct 06 2019 20:40:57 GMT+0100 (Western European Summer Time)
 </div>
 </div>
 <script src="../prettify.js"></script>
