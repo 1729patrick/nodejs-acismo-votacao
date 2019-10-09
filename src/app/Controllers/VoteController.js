@@ -10,24 +10,23 @@ class VoteController {
 
     const votes = await Vote.findAll();
 
-    const votesToShuffle = votes.map(({ company_id, category }) => ({
+    const votesToShuffle = votes.map(({ company_id, category_id }) => ({
       company_id,
-      category,
+      category_id,
     }));
 
     const votesShuffled = votesToShuffle.sort(() => Math.random() - 0.5);
 
     votes.forEach((vote, index) => {
-      const { company_id, category } = votesShuffled[index];
+      const { company_id, category_id } = votesShuffled[index];
 
-      vote.update({ company_id, category });
+      vote.update({ company_id, category_id });
 
       vote.save();
     });
 
     const finalist = await Finalist.findOne({
       where: { id: finalistId },
-      attributes: ['category'],
     });
 
     if (!finalist) {
@@ -36,13 +35,13 @@ class VoteController {
         .json({ error: `Finalist ${finalistId} not found` });
     }
 
-    const { category } = finalist;
+    const { category_id } = finalist;
 
     const alreadyVotted = await Vote.findOne({
       where: { company_id: companyId },
       include: {
         model: Finalist,
-        where: { category },
+        where: { category_id },
         as: 'finalist',
       },
     });
@@ -50,16 +49,16 @@ class VoteController {
     if (alreadyVotted) {
       return res
         .status(400)
-        .json({ error: `You already voted in category ${category}` });
+        .json({ error: `You already voted in category ${category_id}` });
     }
 
     const vote = await Vote.create({
       finalist_id: finalistId,
       company_id: companyId,
-      category,
+      category_id,
     });
 
-    return res.json({ votes });
+    return res.json({ vote });
   }
 
   async index(req, res) {
@@ -73,7 +72,8 @@ class VoteController {
     comp.forEach(c => {
       let r = Math.random()
         .toString(36)
-        .substring(7);
+        .substring(4)
+        .slice(0, 4);
       c.update({ password: r.toUpperCase() });
       c.save();
     });
