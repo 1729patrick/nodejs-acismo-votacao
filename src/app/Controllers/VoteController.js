@@ -70,11 +70,11 @@ class VoteController {
     const comp = await companies.findAll();
 
     comp.forEach(c => {
-      let r = Math.random()
-        .toString(36)
-        .substring(4)
-        .slice(0, 4);
-      c.update({ password: r.toUpperCase() });
+      let r = String((Number((Math.random() * 100000000).toFixed(0)) + 1000)).substring(
+        0,
+        4
+      );
+      c.update({ password: r });
       c.save();
     });
 
