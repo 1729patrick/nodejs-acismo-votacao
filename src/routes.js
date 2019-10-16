@@ -18,5 +18,4 @@ router.post('/votes/:finalistId', VoteController.store);
 
 router.get('/podiums', PodiumController.index);
 
-// router.get('/test', VoteController.test);
 export default router;
