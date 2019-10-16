@@ -5,52 +5,35 @@ import { fn, literal } from 'sequelize';
 
 class PodiumController {
   async index(req, res) {
-    const votes = await Vote.findAll({
+    const finalists = await Finalist.findAll({
       include: [
         {
-          model: Finalist,
-          as: 'finalist',
-
-          include: [
-            {
-              model: Company,
-              as: 'company',
-              attributes: { exclude: ['password'] },
-            },
-            'category',
-          ],
+          model: Vote,
+          as: 'vote',
         },
-      ],
-      attributes: [[fn('COUNT', 'finalist.id'), 'total']],
-      order: [[literal('total'), 'DESC']],
-      group: [
-        'finalist_id',
-        'finalist.id',
-        'finalist->company.id',
-        'finalist->category.id',
+        'company',
+        'category',
       ],
     });
 
-    const votesFormatted = votes.map(vote => {
-      vote = vote.get({
+    const finalistsFormatted = finalists.map(finalist => {
+      finalist = finalist.get({
         plain: true,
       });
 
-      const {
-        company,
-        category: { id, ...category },
-        owner_name,
-      } = vote.finalist;
+      const { vote, ...restFinalist } = finalist;
 
       return {
-        total: Number(vote.total),
-        category,
-        owner_name,
-        company,
+        ...restFinalist,
+        total: vote.length,
       };
     });
 
-    const podium = votesFormatted.reduce((previousValue, currentValue) => {
+    const finalistsSorted = finalistsFormatted.sort(
+      (a, b) => b.total - a.total
+    );
+
+    const podium = finalistsSorted.reduce((previousValue, currentValue) => {
       const { category, ...restVote } = currentValue;
 
       const categoryExist = previousValue.find(

@@ -16,6 +16,7 @@ class Finalist extends Model {
 
   static associate(models) {
     this.belongsTo(models.Company, { foreignKey: 'company_id', as: 'company' });
+    this.hasMany(models.Vote, { foreignKey: 'finalist_id', as: 'vote' });
     this.belongsTo(models.Category, {
       foreignKey: 'category_id',
       as: 'category',
