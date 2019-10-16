@@ -7,10 +7,10 @@ import factory from '../factories';
 
 describe('Finalist', () => {
   beforeAll(async () => {
-    await truncate();
+    // await truncate();
 
     await factory.create('Company', {
-      cnpj: 'CNPJ',
+      id: 3,
       password: 'PASSWORD',
     });
 
@@ -21,7 +21,7 @@ describe('Finalist', () => {
     const sessionResponse = await request(app)
       .post('/sessions')
       .send({
-        cnpj: 'CNPJ',
+        id: 3,
         password: 'PASSWORD',
       });
 

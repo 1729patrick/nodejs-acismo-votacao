@@ -7,10 +7,8 @@ import factory from '../factories';
 
 describe('Company', () => {
   beforeAll(async () => {
-    await truncate();
-
     await factory.create('Company', {
-      cnpj: 'CNPJ',
+      id: 1,
       password: 'PASSWORD',
     });
   });
@@ -19,7 +17,7 @@ describe('Company', () => {
     const response = await request(app)
       .post('/sessions')
       .send({
-        cnpj: '04.687.857/-82',
+        id: 2,
         password: 'PASSWORD',
       });
 
@@ -30,7 +28,7 @@ describe('Company', () => {
     const response = await request(app)
       .post('/sessions')
       .send({
-        cnpj: 'CNPJ',
+        id: 1,
         password: '04.687.857/-82',
       });
 
@@ -41,7 +39,7 @@ describe('Company', () => {
     const response = await request(app)
       .post('/sessions')
       .send({
-        cnpj: 'CNPJ',
+        id: 1,
         password: 'PASSWORD',
       });
 
