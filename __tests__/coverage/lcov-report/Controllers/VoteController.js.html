@@ -162,7 +162,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -205,6 +204,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -228,24 +228,23 @@ class VoteController {
 &nbsp;
     const votes = <span class="cstat-no" title="statement not covered" >await Vote.findAll();</span>
 &nbsp;
-    const votesToShuffle = <span class="cstat-no" title="statement not covered" >votes.map(<span class="fstat-no" title="function not covered" >({</span> company_id, category }) =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
+    const votesToShuffle = <span class="cstat-no" title="statement not covered" >votes.map(<span class="fstat-no" title="function not covered" >({</span> company_id, category_id }) =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
       company_id,
-      category,
+      category_id,
     }));
 &nbsp;
     const votesShuffled = <span class="cstat-no" title="statement not covered" >votesToShuffle.sort(<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >Math.random() - 0.5)</span>;</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    votes.forEach(<span class="fstat-no" title="function not covered" >(v</span>ote, index) =&gt; {</span>
-      const { company_id, category } = <span class="cstat-no" title="statement not covered" >votesShuffled[index];</span>
+      const { company_id, category_id } = <span class="cstat-no" title="statement not covered" >votesShuffled[index];</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >      vote.update({ company_id, category });</span>
+<span class="cstat-no" title="statement not covered" >      vote.update({ company_id, category_id });</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >      vote.save();</span>
     });
 &nbsp;
     const finalist = <span class="cstat-no" title="statement not covered" >await Finalist.findOne({</span>
       where: { id: finalistId },
-      attributes: ['category'],
     });
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    if (!finalist) {</span>
@@ -254,13 +253,13 @@ class VoteController {
         .json({ error: `Finalist ${finalistId} not found` });
     }
 &nbsp;
-    const { category } = <span class="cstat-no" title="statement not covered" >finalist;</span>
+    const { category_id } = <span class="cstat-no" title="statement not covered" >finalist;</span>
 &nbsp;
     const alreadyVotted = <span class="cstat-no" title="statement not covered" >await Vote.findOne({</span>
       where: { company_id: companyId },
       include: {
         model: Finalist,
-        where: { category },
+        where: { category_id },
         as: 'finalist',
       },
     });
@@ -268,16 +267,16 @@ class VoteController {
 <span class="cstat-no" title="statement not covered" >    if (alreadyVotted) {</span>
 <span class="cstat-no" title="statement not covered" >      return res</span>
         .status(400)
-        .json({ error: `You already voted in category ${category}` });
+        .json({ error: `You already voted in category ${category_id}` });
     }
 &nbsp;
     const vote = <span class="cstat-no" title="statement not covered" >await Vote.create({</span>
       finalist_id: finalistId,
       company_id: companyId,
-      category,
+      category_id,
     });
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return res.json({ votes });</span>
+<span class="cstat-no" title="statement not covered" >    return res.json({ vote });</span>
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  as</span>ync index(req, res) {
@@ -289,10 +288,11 @@ class VoteController {
     const comp = <span class="cstat-no" title="statement not covered" >await companies.findAll();</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    comp.forEach(<span class="fstat-no" title="function not covered" >c </span>=&gt; {</span>
-      let r = <span class="cstat-no" title="statement not covered" >Math.random()</span>
-        .toString(36)
-        .substring(7);
-<span class="cstat-no" title="statement not covered" >      c.update({ password: r.toUpperCase() });</span>
+      let r = <span class="cstat-no" title="statement not covered" >String((Number((Math.random() * 100000000).toFixed(0)) + 1000)).substring(</span>
+        0,
+        4
+      );
+<span class="cstat-no" title="statement not covered" >      c.update({ password: r });</span>
 <span class="cstat-no" title="statement not covered" >      c.save();</span>
     });
 &nbsp;
@@ -307,7 +307,7 @@ export default new VoteController();
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Oct 06 2019 20:40:57 GMT+0100 (Western European Summer Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Oct 16 2019 15:45:18 GMT+0100 (Western European Summer Time)
 </div>
 </div>
 <script src="../prettify.js"></script>
