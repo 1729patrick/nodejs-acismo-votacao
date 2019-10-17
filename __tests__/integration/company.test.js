@@ -7,7 +7,7 @@ import factory from '../factories';
 
 describe('Company', () => {
   beforeAll(async () => {
-    await factory.create('Company', {
+    const company = await factory.create('Company', {
       id: 1,
       password: 'PASSWORD',
     });

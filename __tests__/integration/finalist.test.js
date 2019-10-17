@@ -10,7 +10,7 @@ describe('Finalist', () => {
     // await truncate();
 
     await factory.create('Company', {
-      id: 3,
+      id: 50,
       password: 'PASSWORD',
     });
 
@@ -21,7 +21,7 @@ describe('Finalist', () => {
     const sessionResponse = await request(app)
       .post('/sessions')
       .send({
-        id: 3,
+        id: 50,
         password: 'PASSWORD',
       });
 
