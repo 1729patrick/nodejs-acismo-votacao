@@ -10,7 +10,7 @@ export default (req, res, next) => {
     process.env.END_MINUTE
   );
 
-  console.log(new Date(date), new Date(startDate), new Date(endDate));
+  // console.log(new Date(date), new Date(startDate), new Date(endDate));
 
   if (date > startDate && date < endDate) {
     return next();

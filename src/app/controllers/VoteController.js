@@ -8,23 +8,6 @@ class VoteController {
     const { companyId } = req;
     const { finalistId } = req.params;
 
-    const votes = await Vote.findAll();
-
-    const votesToShuffle = votes.map(({ company_id, category_id }) => ({
-      company_id,
-      category_id,
-    }));
-
-    const votesShuffled = votesToShuffle.sort(() => Math.random() - 0.5);
-
-    votes.forEach((vote, index) => {
-      const { company_id, category_id } = votesShuffled[index];
-
-      vote.update({ company_id, category_id });
-
-      vote.save();
-    });
-
     const finalist = await Finalist.findOne({
       where: { id: finalistId },
     });
@@ -48,18 +31,35 @@ class VoteController {
       ],
     });
 
+    const votes = await Vote.findAll();
+
     if (alreadyVotted) {
       return res.status(400).json({
         error: `Você já votou na categoria ${alreadyVotted.finalist.category.name}`,
+        votes,
       });
     }
 
-    // return res.status(400).json({ x: 'passou' });
     const vote = await Vote.create({
       finalist_id: finalistId,
       company_id: companyId,
       category_id,
     });
+
+    // const votesToShuffle = votes.map(({ company_id, category_id }) => ({
+    //   company_id,
+    //   category_id,
+    // }));
+
+    // const votesShuffled = votesToShuffle.sort(() => Math.random() - 0.5);
+
+    // votes.forEach(async (vote, index) => {
+    //   const { company_id, category_id } = votesShuffled[index];
+
+    //   await vote.update({ company_id, category_id });
+
+    //   await vote.save();
+    // });
 
     return res.json({ vote });
   }
