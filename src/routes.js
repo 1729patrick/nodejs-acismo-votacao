@@ -11,14 +11,14 @@ const router = new Router();
 
 router.use(timeMiddleware);
 
-router.post('/acismo/sessions', SessionController.store);
+router.post('/sessions', SessionController.store);
 
 router.use(authMiddleware);
 
-router.get('/acismo/finalists', FinalistController.index);
+router.get('/finalists', FinalistController.index);
 
-router.post('/acismo/votes/:finalistId', VoteController.store);
+router.post('/votes/:finalistId', VoteController.store);
 
-router.get('/acismo/podiums', PodiumController.index);
+router.get('/podiums', PodiumController.index);
 
 export default router;
