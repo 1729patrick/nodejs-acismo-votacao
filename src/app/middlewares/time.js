@@ -16,7 +16,7 @@ export default (req, res, next) => {
     return next();
   }
 
-  return res.json({
+  return res.status(401).json({
     error:
       'Aconteceu algum problema, horário de votação é das 19:00hrs às 21:30hrs',
   });
