@@ -38,20 +38,23 @@ class VoteController {
     const { category_id } = finalist;
 
     const alreadyVotted = await Vote.findOne({
-      where: { company_id: companyId },
-      include: {
-        model: Finalist,
-        where: { category_id },
-        as: 'finalist',
-      },
+      where: { company_id: companyId, category_id },
+      include: [
+        {
+          model: Finalist,
+          as: 'finalist',
+          include: 'category',
+        },
+      ],
     });
 
     if (alreadyVotted) {
-      return res
-        .status(400)
-        .json({ error: `You already voted in category ${category_id}` });
+      return res.status(400).json({
+        error: `Você já votou na categoria ${alreadyVotted.finalist.category.name}`,
+      });
     }
 
+    // return res.status(400).json({ x: 'passou' });
     const vote = await Vote.create({
       finalist_id: finalistId,
       company_id: companyId,
@@ -70,10 +73,9 @@ class VoteController {
     const comp = await companies.findAll();
 
     comp.forEach(c => {
-      let r = String((Number((Math.random() * 100000000).toFixed(0)) + 1000)).substring(
-        0,
-        4
-      );
+      let r = String(
+        Number((Math.random() * 100000000).toFixed(0)) + 1000
+      ).substring(0, 4);
       c.update({ password: r });
       c.save();
     });
